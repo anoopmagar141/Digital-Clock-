@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Digital Clock</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <div id="clock">
+            <h1 id="greeting">Hello!</h1>
+            <h1 id="time">00:00:00</h1>
+            <p id="date">Loading...</p>
+            <p id="quote">"A journey of a thousand miles begins with a single step."</p>
+
+            <div class="controls">
+                <button id="toggle-format">Switch to 12-Hour</button>
+                <select id="time-zone">
+                    <option value="local">Local Time</option>
+                    <option value="UTC">UTC</option>
+                    <option value="America/New_York">New York (EST)</option>
+                    <option value="Asia/Kolkata">India (IST)</option>
+                    <option value="Europe/London">London (GMT)</option>
+                </select>
+                <button id="toggle-theme">Switch to Light Mode</button>
+            </div>
+
+            <div id="keyboard-shortcuts">
+                <p>Keyboard Controls:</p>
+                <ul>
+                    <li>`A` - Set Alarm</li>
+                    <li>`S` - Start/Stop Stopwatch</li>
+                    <li>`T` - Set Countdown Timer</li>
+                    <li>`F` - Toggle 12/24 Hour</li>
+                    <li>`M` - Switch Theme</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="additional-features">
+            <div id="alarm-section">
+                <h2>Alarm</h2>
+                <input type="time" id="alarm-time">
+                <button id="set-alarm">Set Alarm</button>
+                <p id="alarm-status"></p>
+            </div>
+
+            <div id="stopwatch-section">
+                <h2>Stopwatch</h2>
+                <p id="stopwatch">00:00:00</p>
+                <button id="start-stopwatch">Start</button>
+                <button id="reset-stopwatch">Reset</button>
+            </div>
+
+            <div id="timer-section">
+                <h2>Countdown Timer</h2>
+                <input type="number" id="timer-input" placeholder="Enter seconds">
+                <p id="countdown-timer">00:00</p>
+                <button id="start-timer">Start</button>
+                <button id="reset-timer">Reset</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
