@@ -1,0 +1,62 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #282c34;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#app {
+    text-align: center;
+    background: #444;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#time {
+    font-size: 48px;
+    margin: 0;
+}
+
+.controls button, .controls select {
+    margin: 10px 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1db954;
+}
+
+.light-mode {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.light-mode #app {
+    background: #fff;
+    color: #333;
+}
+
+/* Feature Sections */
+#additional-features {
+    margin-top: 20px;
+    text-align: left;
+}
+
+#additional-features div {
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
