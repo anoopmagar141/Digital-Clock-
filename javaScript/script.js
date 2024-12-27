@@ -1,6 +1,8 @@
 let is24HourFormat = true;
 let selectedTimeZone = 'local';
 let isDarkMode = true;
+let alarmTime = null; // Store the alarm time
+let alarmSound = new Audio('assets/sounds/alarm.mp3'); // Path to your alarm sound
 
 // Update Clock
 function updateClock() {
@@ -20,6 +22,13 @@ function updateClock() {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const date = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
     document.getElementById('date').textContent = date;
+
+    // Check if alarm time matches current time
+    if (alarmTime && `${String(hours).padStart(2, '0')}:${minutes}` === alarmTime) {
+        alarmSound.play(); // Play the alarm sound
+        alert('Alarm ringing!');
+        alarmTime = null; // Reset the alarm after it triggers
+    }
 }
 
 // Toggle 12/24 Hour Format
@@ -42,13 +51,14 @@ document.getElementById('time-zone').addEventListener('change', (e) => {
     updateClock();
 });
 
-// Alarm
+// Set Alarm
 document.getElementById('set-alarm').addEventListener('click', () => {
-    const alarmTime = document.getElementById('alarm-time').value;
-    if (!alarmTime) {
+    const alarmInput = document.getElementById('alarm-time').value;
+    if (!alarmInput) {
         alert('Please set a valid alarm time.');
         return;
     }
+    alarmTime = alarmInput;
     alert(`Alarm set for ${alarmTime}`);
 });
 
@@ -94,6 +104,7 @@ document.getElementById('start-timer').addEventListener('click', () => {
         timeRemaining--;
         if (timeRemaining <= 0) {
             clearInterval(timerInterval);
+            alarmSound.play(); // Play sound when timer finishes
             alert('Timer finished!');
         }
         document.getElementById('countdown-timer').textContent = formatTime(timeRemaining);
