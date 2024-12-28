@@ -9,77 +9,99 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
+    overflow: auto;
 }
 
 #app {
     text-align: center;
     background: #444;
-    padding: 20px 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    max-width: 600px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     width: 90%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Digital and Classic Clock Layout */
+#digital-clock-section,
+#classic-clock-section {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+#digital-clock-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#classic-clock-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Digital Clock Styles */
 #time {
-    font-size: 60px;
+    font-size: 48px;
     margin: 10px 0;
-    font-weight: bold;
     color: #1db954;
 }
 
-#greeting {
-    font-size: 32px;
-    margin: 10px 0;
-    color: #f4d03f;
-}
-
 #date {
-    font-size: 18px;
-    margin: 5px 0;
-    color: #ccc;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 #quote {
-    margin-top: 15px;
-    font-size: 16px;
     font-style: italic;
-    color: #d1d1d1;
+    margin: 10px 0;
 }
 
-.mini-clock {
-    margin-top: 20px;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background: #333;
-    color: #fff;
-    display: inline-block;
+/* Classic Clock Styles */
+#classic-clock {
+    display: block;
+    margin: 0 auto;
+    border: 4px solid white;
+    border-radius: 50%;
+    background-color: #333;
 }
 
 /* Controls */
-.controls button, .controls select {
-    margin: 10px 5px;
+.controls {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.controls button, 
+.controls select {
+    margin: 5px;
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    background-color: #1db954;
+    color: white;
     font-size: 14px;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button:hover {
-    background-color: #1db954;
-    color: white;
+    background-color: #17a845;
 }
 
 select {
-    background: #555;
-    color: #fff;
+    background-color: #333;
+    color: white;
+    font-size: 14px;
+    padding: 10px;
 }
 
+/* Light Mode */
 .light-mode {
     background-color: #f4f4f4;
     color: #333;
@@ -90,118 +112,103 @@ select {
     color: #333;
 }
 
-.light-mode .controls button, .light-mode .controls select {
-    background: #ddd;
-    color: #333;
-}
-
-.light-mode .mini-clock {
-    background: #eaeaea;
-    color: #333;
-    border-color: #ccc;
+.light-mode .controls button,
+.light-mode .controls select {
+    background-color: #555;
+    color: white;
 }
 
 /* Feature Sections */
 #additional-features {
-    margin-top: 30px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     text-align: left;
-    color: #ddd;
 }
 
 #additional-features div {
-    margin-bottom: 25px;
-    border: 1px solid #555;
-    padding: 15px;
-    border-radius: 8px;
+    flex: 1 1 calc(33% - 20px);
+    margin: 10px;
+    padding: 10px;
     background: #333;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
-    font-size: 22px;
-    margin-bottom: 15px;
+    font-size: 18px;
+    margin-bottom: 10px;
     color: #1db954;
-    text-transform: uppercase;
 }
 
-/* Alarm Section */
-#alarm-section input {
-    width: 100%;
-    padding: 8px;
-    font-size: 14px;
-    margin-bottom: 10px;
-    border: 1px solid #555;
+input[type="time"],
+input[type="number"] {
+    padding: 10px;
     border-radius: 5px;
-    background: #222;
-    color: white;
-}
-
-#alarm-section button {
-    width: 100%;
-    background-color: #444;
-    color: #ddd;
-    border: 1px solid #666;
-}
-
-#alarm-status {
-    margin-top: 10px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    width: 70%;
     font-size: 14px;
-    color: #f4d03f;
+    box-sizing: border-box;
 }
 
-/* Stopwatch Section */
-#stopwatch-section {
-    text-align: center;
+button {
+    font-size: 14px;
 }
 
-#stopwatch {
-    font-size: 28px;
-    margin-bottom: 10px;
-    color: #ff6b6b;
+#stopwatch-buttons button {
+    margin-right: 5px;
 }
 
+/* Stopwatch Records */
 #previous-records {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #d1d1d1;
-}
-
-/* Timer Section */
-#timer-section input {
-    width: 100%;
-    padding: 8px;
-    font-size: 14px;
-    margin-bottom: 10px;
-    border: 1px solid #555;
+    background-color: #333;
+    padding: 10px;
     border-radius: 5px;
-    background: #222;
-    color: white;
-}
-
-#timer-section button {
-    width: 100%;
-    background-color: #444;
-    color: #ddd;
-    border: 1px solid #666;
-}
-
-#countdown-timer {
-    font-size: 28px;
     margin-top: 10px;
-    color: #ffa502;
+    font-size: 14px;
+    color: #ccc;
 }
 
-/* Mini Clock */
-#mini-clock {
-    width: 100px;
-    height: 100px;
-    margin: 10px auto;
-    border-radius: 50%;
-    border: 5px solid #1db954;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    background: #000;
+/* Responsive Design */
+@media (min-width: 768px) {
+    #app {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    #digital-clock-section,
+    #classic-clock-section {
+        flex: 1;
+        margin: 0 10px;
+    }
+
+    #additional-features {
+        flex: 1;
+        margin: 20px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    #time {
+        font-size: 36px;
+    }
+
+    #classic-clock {
+        width: 150px;
+        height: 150px;
+    }
+
+    .controls button, 
+    .controls select {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    input[type="time"],
+    input[type="number"] {
+        width: 100%;
+        margin: 5px 0;
+    }
 }

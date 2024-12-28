@@ -3,33 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Digital Clock</title>
+    <title>Advanced Clock</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="app">
-        <!-- Clock Section -->
-        <div id="clock">
+        <!-- Digital and Classic Clock Section -->
+        <div id="digital-clock-section">
             <h1 id="greeting">Hello!</h1>
             <h1 id="time">00:00:00</h1>
             <p id="date">Loading...</p>
-            <p id="quote">"Inspirational Quote"</p>
-            <div id="mini-clock" class="mini-clock">Loading mini clock...</div>
-
-            <div class="controls">
-                <button id="toggle-format">Switch to 12-Hour</button>
-                <select id="time-zone">
-                    <option value="local">Local Time</option>
-                    <option value="UTC">UTC</option>
-                    <option value="America/New_York">New York (EST)</option>
-                    <option value="Asia/Kolkata">India (IST)</option>
-                    <option value="Europe/London">London (GMT)</option>
-                </select>
-                <button id="toggle-theme">Switch to Light Mode</button>
-            </div>
+            <p id="quote">"Walk slowly, but never backward."</p>
+        </div>
+        <div id="classic-clock-section">
+            <canvas id="classic-clock" width="200" height="200"></canvas>
         </div>
 
-        <!-- Additional Features Section -->
+        <!-- Controls -->
+        <div class="controls">
+            <button id="toggle-format">Switch to 12-Hour</button>
+            <select id="time-zone">
+                <option value="local">Local Time</option>
+                <option value="UTC">UTC</option>
+                <option value="America/New_York">New York (EST)</option>
+                <option value="Asia/Kolkata">India (IST)</option>
+                <option value="Europe/London">London (GMT)</option>
+            </select>
+            <button id="toggle-theme">Switch to Light Mode</button>
+        </div>
+
+        <!-- Additional Features -->
         <div id="additional-features">
             <!-- Alarm Section -->
             <div id="alarm-section">
@@ -43,12 +46,15 @@
             <div id="stopwatch-section">
                 <h2>Stopwatch</h2>
                 <p id="stopwatch">00:00:00</p>
-                <button id="start-stopwatch">Start</button>
-                <button id="reset-stopwatch">Reset</button>
-                <div id="previous-records">Previous Records: None</div>
+                <div id="stopwatch-buttons">
+                    <button id="start-stopwatch">Start</button>
+                    <button id="pause-stopwatch">Pause</button>
+                    <button id="reset-stopwatch">Reset</button>
+                </div>
+                <div id="previous-records"></div>
             </div>
 
-            <!-- Timer Section -->
+            <!-- Countdown Timer Section -->
             <div id="timer-section">
                 <h2>Countdown Timer</h2>
                 <input type="number" id="timer-input" placeholder="Enter seconds">
@@ -58,7 +64,6 @@
             </div>
         </div>
     </div>
-
     <script src="javaScript/script.js"></script>
 </body>
 </html>
