@@ -14,26 +14,70 @@ body {
 #app {
     text-align: center;
     background: #444;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    width: 90%;
 }
 
 #time {
-    font-size: 48px;
-    margin: 0;
+    font-size: 60px;
+    margin: 10px 0;
+    font-weight: bold;
+    color: #1db954;
 }
 
+#greeting {
+    font-size: 32px;
+    margin: 10px 0;
+    color: #f4d03f;
+}
+
+#date {
+    font-size: 18px;
+    margin: 5px 0;
+    color: #ccc;
+}
+
+#quote {
+    margin-top: 15px;
+    font-size: 16px;
+    font-style: italic;
+    color: #d1d1d1;
+}
+
+.mini-clock {
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #333;
+    color: #fff;
+    display: inline-block;
+}
+
+/* Controls */
 .controls button, .controls select {
     margin: 10px 5px;
-    padding: 10px;
+    padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button:hover {
     background-color: #1db954;
+    color: white;
+}
+
+select {
+    background: #555;
+    color: #fff;
 }
 
 .light-mode {
@@ -46,17 +90,118 @@ button:hover {
     color: #333;
 }
 
+.light-mode .controls button, .light-mode .controls select {
+    background: #ddd;
+    color: #333;
+}
+
+.light-mode .mini-clock {
+    background: #eaeaea;
+    color: #333;
+    border-color: #ccc;
+}
+
 /* Feature Sections */
 #additional-features {
-    margin-top: 20px;
+    margin-top: 30px;
     text-align: left;
+    color: #ddd;
 }
 
 #additional-features div {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    border: 1px solid #555;
+    padding: 15px;
+    border-radius: 8px;
+    background: #333;
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #1db954;
+    text-transform: uppercase;
+}
+
+/* Alarm Section */
+#alarm-section input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
     margin-bottom: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #222;
+    color: white;
+}
+
+#alarm-section button {
+    width: 100%;
+    background-color: #444;
+    color: #ddd;
+    border: 1px solid #666;
+}
+
+#alarm-status {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #f4d03f;
+}
+
+/* Stopwatch Section */
+#stopwatch-section {
+    text-align: center;
+}
+
+#stopwatch {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #ff6b6b;
+}
+
+#previous-records {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #d1d1d1;
+}
+
+/* Timer Section */
+#timer-section input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #222;
+    color: white;
+}
+
+#timer-section button {
+    width: 100%;
+    background-color: #444;
+    color: #ddd;
+    border: 1px solid #666;
+}
+
+#countdown-timer {
+    font-size: 28px;
+    margin-top: 10px;
+    color: #ffa502;
+}
+
+/* Mini Clock */
+#mini-clock {
+    width: 100px;
+    height: 100px;
+    margin: 10px auto;
+    border-radius: 50%;
+    border: 5px solid #1db954;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background: #000;
 }
