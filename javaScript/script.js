@@ -2,7 +2,10 @@ let selectedTimeZone = 'local'; // Default time zone is local
 let isDarkMode = true; // Default is dark mode
 let alarmTime = null; // Alarm time
 let alarmSound = new Audio('assets/sounds/alarm.mp3'); // Alarm sound file
+let buttonClickSound = new Audio('assets/sounds/button-click.mp3'); // Button click sound
 let timerInterval = null; // Timer interval for countdown timer
+let isStopwatchRunning = false; // Flag to check if the stopwatch is running
+let isCountdownRunning = false; // Flag to check if the countdown is running
 
 // Update Clock
 function updateClock() {
@@ -51,8 +54,14 @@ function updateClock() {
     checkAlarm(now);
 }
 
+// Function to play sound when a button is clicked
+function playButtonClickSound() {
+    buttonClickSound.play();
+}
+
 // Toggle Light/Dark Mode
 document.getElementById('toggle-theme').addEventListener('click', () => {
+    playButtonClickSound(); // Play sound when button is clicked
     document.body.classList.toggle('light-mode');
     document.body.classList.toggle('dark-mode'); // Ensure dark mode can be toggled
     isDarkMode = !isDarkMode;
@@ -61,21 +70,38 @@ document.getElementById('toggle-theme').addEventListener('click', () => {
 
 // Set Alarm
 document.getElementById('set-alarm').addEventListener('click', () => {
+    playButtonClickSound(); // Play sound when button is clicked
+
     const alarmInput = document.getElementById('alarm-time').value;
     if (!alarmInput) {
         alert('Please set a valid alarm time.');
         return;
     }
+
     alarmTime = alarmInput;
     alert(`Alarm set for ${alarmTime}`);
 });
 
 // Check if the current time matches the alarm time
 function checkAlarm(now) {
-    if (alarmTime && now.getHours() === parseInt(alarmTime.split(':')[0]) && now.getMinutes() === parseInt(alarmTime.split(':')[1])) {
-        alarmSound.play();
-        alert('Alarm ringing!');
-        alarmTime = null; // Reset alarm after it rings
+    if (alarmTime) {
+        const [alarmHour, alarmMinuteWithPeriod] = alarmTime.split(':'); // Split time into hour and minute+AM/PM
+        const alarmMinute = alarmMinuteWithPeriod.slice(0, 2); // Minute part
+        const alarmPeriod = alarmMinuteWithPeriod.slice(3); // AM/PM part
+
+        let alarmTimeHour = parseInt(alarmHour, 10);
+        if (alarmPeriod === 'PM' && alarmTimeHour !== 12) {
+            alarmTimeHour += 12; // Convert PM time into 24-hour format
+        } else if (alarmPeriod === 'AM' && alarmTimeHour === 12) {
+            alarmTimeHour = 0; // Convert 12 AM to 0 hour
+        }
+
+        // Check if the current time matches the alarm time (hours, minutes, and seconds)
+        if (now.getHours() === alarmTimeHour && now.getMinutes() === parseInt(alarmMinute, 10) && now.getSeconds() === 0) {
+            alarmSound.play();
+            alert('Alarm ringing!');
+            alarmTime = null; // Reset alarm after it rings
+        }
     }
 }
 
@@ -84,7 +110,9 @@ let stopwatchInterval = null;
 let stopwatchTime = 0;
 
 document.getElementById('start-stopwatch').addEventListener('click', () => {
+    playButtonClickSound(); // Play sound when button is clicked
     if (!stopwatchInterval) {
+        isStopwatchRunning = true; // Set flag to true
         stopwatchInterval = setInterval(() => {
             stopwatchTime++;
             displayStopwatchTime();
@@ -93,14 +121,18 @@ document.getElementById('start-stopwatch').addEventListener('click', () => {
 });
 
 document.getElementById('pause-stopwatch').addEventListener('click', () => {
+    playButtonClickSound(); // Play sound when button is clicked
     clearInterval(stopwatchInterval);
     stopwatchInterval = null;
+    isStopwatchRunning = false; // Set flag to false
 });
 
 document.getElementById('reset-stopwatch').addEventListener('click', () => {
+    playButtonClickSound(); // Play sound when button is clicked
     clearInterval(stopwatchInterval);
     stopwatchInterval = null;
     stopwatchTime = 0;
+    isStopwatchRunning = false; // Set flag to false
     displayStopwatchTime();
 });
 
@@ -112,6 +144,7 @@ function displayStopwatchTime() {
 
 // Countdown Timer Functions
 document.getElementById('start-timer').addEventListener('click', () => {
+    playButtonClickSound(); // Play sound when button is clicked
     const input = document.getElementById('timer-input').value;
     let timeRemaining = parseInt(input, 10);
     if (isNaN(timeRemaining) || timeRemaining <= 0) {
@@ -119,6 +152,7 @@ document.getElementById('start-timer').addEventListener('click', () => {
         return;
     }
 
+    isCountdownRunning = true; // Set flag to true
     timerInterval = setInterval(() => {
         timeRemaining--;
         document.getElementById('countdown-timer').textContent = formatTime(timeRemaining);
@@ -126,13 +160,16 @@ document.getElementById('start-timer').addEventListener('click', () => {
             clearInterval(timerInterval);
             alarmSound.play();
             alert('Timer finished!');
+            isCountdownRunning = false; // Reset flag after timer finishes
         }
     }, 1000);
 });
 
 document.getElementById('reset-timer').addEventListener('click', () => {
+    playButtonClickSound(); // Play sound when button is clicked
     clearInterval(timerInterval);
     document.getElementById('countdown-timer').textContent = '00:00';
+    isCountdownRunning = false; // Set flag to false
 });
 
 // Format the time for countdown timer
@@ -169,7 +206,8 @@ function drawClassicClock() {
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(0, -radius / 2);
-    ctx.lineWidth = 8;
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = '#000000';
     ctx.stroke();
     ctx.restore();
 
@@ -181,6 +219,7 @@ function drawClassicClock() {
     ctx.moveTo(0, 0);
     ctx.lineTo(0, -radius * 0.8);
     ctx.lineWidth = 4;
+    ctx.strokeStyle = '#000000';
     ctx.stroke();
     ctx.restore();
 
@@ -190,25 +229,13 @@ function drawClassicClock() {
     ctx.rotate((Math.PI * 2) * (second / 60));
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.lineTo(0, -radius * 0.9);
-    ctx.strokeStyle = 'red';
+    ctx.lineTo(0, -radius);
     ctx.lineWidth = 2;
+    ctx.strokeStyle = '#ff0000';
     ctx.stroke();
     ctx.restore();
 }
 
-// Update clock every second
-setInterval(() => {
-    updateClock();
-    drawClassicClock();
-}, 1000);
-
-// Change Time Zone
-function changeTimeZone(timeZone) {
-    selectedTimeZone = timeZone;
-    updateClock(); // Update clock when time zone changes
-}
-
-document.getElementById('time-zone-select').addEventListener('change', (event) => {
-    changeTimeZone(event.target.value);
-});
+// Start Clock Update
+setInterval(updateClock, 1000);
+setInterval(drawClassicClock, 1000);
