@@ -167,6 +167,32 @@ button:hover {
     margin-bottom: 10px;
 }
 
+/* Text Colors for Light Mode */
+body.light-mode h1,
+body.light-mode p,
+body.light-mode #time,
+body.light-mode #date,
+body.light-mode #quote {
+    color: #121212; /* Dark text for light mode */
+}
+
+body.light-mode #alarm-section,
+body.light-mode #stopwatch-section,
+body.light-mode #timer-section {
+    background-color: #fff;
+    color: #121212; /* Dark text for feature sections */
+}
+
+/* Light Mode Button */
+body.light-mode #toggle-theme {
+    background-color: #f4f4f4;
+    color: #121212;
+}
+
+body.light-mode #toggle-theme:hover {
+    background-color: #ddd;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     #clock-container {
