@@ -2,7 +2,17 @@ let is24HourFormat = true;
 let selectedTimeZone = 'local';
 let isDarkMode = true;
 let alarmTime = null; // Store the alarm time
-let alarmSound = new Audio('assets/sounds/alarm.mp3'); // Path to your alarm sound
+let alarmSound = new Audio('assets/sounds/alarm.mp3'); // Replace with your alarm sound path
+let stopwatchInterval = null;
+let stopwatchTime = 0;
+let timerInterval = null;
+let previousRecords = [];
+let quotes = [
+    "Walk slowly but never backward.",
+    "The best time to start was yesterday. The next best time is now.",
+    "Dream big and dare to fail.",
+    "Success is not final; failure is not fatal: It is the courage to continue that counts."
+];
 
 // Update Clock
 function updateClock() {
@@ -15,6 +25,7 @@ function updateClock() {
     if (!is24HourFormat) {
         hours = hours % 12 || 12; // Convert to 12-hour format
     }
+
     const timeString = `${String(hours).padStart(2, '0')}:${minutes}:${seconds}${!is24HourFormat ? (isPM ? ' PM' : ' AM') : ''}`;
     document.getElementById('time').textContent = timeString;
 
@@ -23,12 +34,22 @@ function updateClock() {
     const date = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
     document.getElementById('date').textContent = date;
 
-    // Check if alarm time matches current time
+    // Greeting based on time
+    const greeting = now.getHours() < 12 ? 'Good Morning!' : now.getHours() < 18 ? 'Good Afternoon!' : 'Good Evening!';
+    document.getElementById('greeting').textContent = greeting;
+
+    // Check alarm
     if (alarmTime && `${String(hours).padStart(2, '0')}:${minutes}` === alarmTime) {
-        alarmSound.play(); // Play the alarm sound
+        alarmSound.play();
         alert('Alarm ringing!');
-        alarmTime = null; // Reset the alarm after it triggers
+        alarmTime = null; // Reset alarm
     }
+}
+
+// Set Random Quote
+function updateQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    document.getElementById('quote').textContent = `"${quotes[randomIndex]}"`;
 }
 
 // Toggle 12/24 Hour Format
@@ -59,23 +80,20 @@ document.getElementById('set-alarm').addEventListener('click', () => {
         return;
     }
     alarmTime = alarmInput;
-    alert(`Alarm set for ${alarmTime}`);
+    document.getElementById('alarm-status').textContent = `Alarm set for ${alarmTime}`;
 });
 
-// Stopwatch
-let stopwatchInterval;
-let stopwatchTime = 0;
-
+// Stopwatch Functionality
 document.getElementById('start-stopwatch').addEventListener('click', () => {
     if (stopwatchInterval) {
         clearInterval(stopwatchInterval);
         stopwatchInterval = null;
+        previousRecords.push(formatTime(stopwatchTime));
+        displayPreviousRecords();
     } else {
         stopwatchInterval = setInterval(() => {
             stopwatchTime++;
-            const minutes = String(Math.floor(stopwatchTime / 60)).padStart(2, '0');
-            const seconds = String(stopwatchTime % 60).padStart(2, '0');
-            document.getElementById('stopwatch').textContent = `${minutes}:${seconds}`;
+            document.getElementById('stopwatch').textContent = formatTime(stopwatchTime);
         }, 1000);
     }
 });
@@ -87,8 +105,13 @@ document.getElementById('reset-stopwatch').addEventListener('click', () => {
     document.getElementById('stopwatch').textContent = '00:00:00';
 });
 
+// Display Previous Stopwatch Records
+function displayPreviousRecords() {
+    const recordList = document.getElementById('previous-records');
+    recordList.innerHTML = previousRecords.map((record, index) => `<p>${index + 1}. ${record}</p>`).join('');
+}
+
 // Countdown Timer
-let timerInterval;
 document.getElementById('start-timer').addEventListener('click', () => {
     const input = document.getElementById('timer-input').value;
     let timeRemaining = parseInt(input, 10);
@@ -102,12 +125,12 @@ document.getElementById('start-timer').addEventListener('click', () => {
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         timeRemaining--;
+        document.getElementById('countdown-timer').textContent = formatTime(timeRemaining);
         if (timeRemaining <= 0) {
             clearInterval(timerInterval);
-            alarmSound.play(); // Play sound when timer finishes
+            alarmSound.play();
             alert('Timer finished!');
         }
-        document.getElementById('countdown-timer').textContent = formatTime(timeRemaining);
     }, 1000);
 });
 
@@ -116,12 +139,25 @@ document.getElementById('reset-timer').addEventListener('click', () => {
     document.getElementById('countdown-timer').textContent = '00:00';
 });
 
+// Utility: Format Time
 function formatTime(seconds) {
-    const minutes = String(Math.floor(seconds / 60)).padStart(2, '0');
-    const secs = String(seconds % 60).padStart(2, '0');
-    return `${minutes}:${secs}`;
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 }
 
-// Update clock every second
+// Mini Clock
+function updateMiniClock() {
+    const now = new Date();
+    const miniClock = document.getElementById('mini-clock');
+    if (miniClock) {
+        miniClock.textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    }
+}
+
+// Initialize
 setInterval(updateClock, 1000);
+setInterval(updateMiniClock, 1000);
 updateClock();
+updateQuote();
